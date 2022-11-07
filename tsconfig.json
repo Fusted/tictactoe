@@ -27,6 +27,8 @@
     "components",
     "services",
     "views",
-    "types"
+    "types",
+    "styles",
+    "packages",
   ]
 }

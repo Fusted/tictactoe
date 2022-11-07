@@ -1,10 +1,13 @@
+@import "styles/variables.scss";
+
 .cell {
     width: 60px;
     height: 60px;
-    border: 2px solid blue;
+    border: 2px solid $secondaryColor;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: $mainColor;
 }
 
 .win {

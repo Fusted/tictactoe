@@ -1,9 +1,14 @@
+@import "styles/variables.scss";
+
 .controls {
     display: flex;
     align-items: center;
     flex-direction: column;
+    color: $mainColor;
+    margin-bottom: 30px;
 }
 
 .input {
     width: 150px;
+    margin-bottom: 10px;
 }
