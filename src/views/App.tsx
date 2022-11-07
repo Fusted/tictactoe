@@ -6,16 +6,14 @@ import { Field, WinCells } from "types/types"
 import Controls from "components/Controls"
 import Button from "packages/Button"
 
-const X_SIZE = 3
-const Y_SIZE = 3
-const GOAL = 3
+const DEFAULT_SIZE = 3
 
 function App() {
     const [winCells, setWinCells] = useState({} as WinCells)
     const [field, setField] = useState({} as Field)
-    const [xSize, setXSize] = useState(X_SIZE)
-    const [ySize, setYSize] = useState(Y_SIZE)
-    const [goal, setGoal] = useState(GOAL)
+    const [xSize, setXSize] = useState(DEFAULT_SIZE)
+    const [ySize, setYSize] = useState(DEFAULT_SIZE)
+    const [goal, setGoal] = useState(DEFAULT_SIZE)
 
     const onXSizeChange = (value: number) => {
         setXSize(value)

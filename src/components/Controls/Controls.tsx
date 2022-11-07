@@ -3,6 +3,10 @@ import style from "./controls.module.scss"
 import React from "react"
 import Range from "packages/Range"
 
+const SIZE_MIN = 3
+const SIZE_MAX = 9
+const STEP = 1
+
 interface Props {
     xSize: number
     ySize: number
@@ -23,10 +27,10 @@ const Controls = ({
     return (
         <div className={style.controls}>
             <Range
-                label="x"
-                min={3}
-                max={9}
-                step={1}
+                label="X"
+                min={SIZE_MIN}
+                max={SIZE_MAX}
+                step={STEP}
                 value={xSize}
                 onChange={onXSizeChange}
             />
@@ -34,15 +38,15 @@ const Controls = ({
                 label="Y"
                 value={ySize}
                 onChange={onYSizeChange}
-                step={1}
-                max={9}
-                min={3}
+                min={SIZE_MIN}
+                max={SIZE_MAX}
+                step={STEP}
             />
             <Range
                 label="Goal"
-                min={3}
-                max={9}
-                step={1}
+                min={SIZE_MIN}
+                max={SIZE_MAX}
+                step={STEP}
                 value={goal}
                 onChange={onGoalChange}
             />
