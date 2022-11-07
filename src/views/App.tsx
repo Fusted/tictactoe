@@ -3,6 +3,7 @@ import style from "./App.module.scss"
 import React, { ChangeEvent, useCallback, useState } from "react"
 import Board from "components/Board"
 import { Field, WinCells } from "types/types"
+import Controls from "components/Controls"
 
 const X_SIZE = 3
 const Y_SIZE = 3
@@ -48,45 +49,15 @@ function App() {
     return (
         <div>
             <div className={style.wrapper}>
-                <div className={style.controls}>
-                    <button onClick={onReset}>RESET</button>
-                    <div>
-                        X:{xSize}
-                        <input
-                            type="range"
-                            min="3"
-                            max="9"
-                            step="1"
-                            value={xSize}
-                            className={style.input}
-                            onChange={onXSizeChange}
-                        />
-                    </div>
-                    <div>
-                        Y:{ySize}
-                        <input
-                            type="range"
-                            min="3"
-                            max="9"
-                            step="1"
-                            value={ySize}
-                            className={style.input}
-                            onChange={onYSizeChange}
-                        />
-                    </div>
-                    <div>
-                        Goal: {goal}
-                        <input
-                            type="range"
-                            min="3"
-                            max="9"
-                            step="1"
-                            value={goal}
-                            className={style.input}
-                            onChange={onGoalChange}
-                        />
-                    </div>
-                </div>
+                <Controls
+                    xSize={xSize}
+                    ySize={ySize}
+                    goal={goal}
+                    onReset={onReset}
+                    onXSizeChange={onXSizeChange}
+                    onYSizeChange={onYSizeChange}
+                    onGoalChange={onGoalChange}
+                />
                 <Board
                     xSize={xSize}
                     ySize={ySize}
