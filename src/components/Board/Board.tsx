@@ -5,14 +5,26 @@ import Cell from "components/Cell"
 import { Field, Position, Targets, WinCells } from "types/types"
 import { getSum } from "./utils"
 
-const X_SIZE = 3
-const Y_SIZE = 3
-const GOAL = 3
+interface Props {
+    xSize: number
+    ySize: number
+    goal: number
+    winCells: WinCells
+    field: Field
+    setWinCells(winCells: WinCells): void
+    setField(field: Field): void
+}
 
-const Board = () => {
+const Board = ({
+    xSize,
+    ySize,
+    goal,
+    winCells,
+    field,
+    setWinCells,
+    setField,
+}: Props) => {
     const [currentValue, setCurrentValue] = useState<Targets>("X")
-    const [winCells, setWinCells] = useState({} as WinCells)
-    const [field, setField] = useState({} as Field)
 
     const onCellClick = useCallback(
         (position: Position, value?: Targets) => {
@@ -27,25 +39,20 @@ const Board = () => {
             setField(newField)
             setCurrentValue(newValue)
 
-            const win = getSum(position, currentValue, newField, GOAL)
+            const win = getSum(position, currentValue, newField, goal)
 
             if (win) {
                 setWinCells(win)
             }
         },
-        [currentValue, field, winCells]
+        [currentValue, field, goal, setField, setWinCells, winCells]
     )
-
-    const onResetClick = useCallback(() => {
-        setField({})
-        setWinCells({})
-    }, [])
 
     const renderRows = () => {
         const rows = []
-        for (let y = 0; y < Y_SIZE; y++) {
+        for (let y = 0; y < ySize; y++) {
             const row = []
-            for (let x = 0; x < X_SIZE; x++) {
+            for (let x = 0; x < xSize; x++) {
                 const position = `${x},${y}`
                 row.push(
                     <Cell
@@ -69,12 +76,7 @@ const Board = () => {
         })
     }
 
-    return (
-        <div className={style.board}>
-            {renderRows()}
-            <button onClick={onResetClick}>RESET</button>
-        </div>
-    )
+    return <div className={style.board}>{renderRows()}</div>
 }
 
 export default Board
