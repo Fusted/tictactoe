@@ -53,10 +53,11 @@ const getDiagonalSum = (
 ): WinCells => {
     let tempY = y
     let tempX = x
-    const winCells = { [`${x},${y}`]: true } as WinCells
+    const winCellsF = { [`${x},${y}`]: true } as WinCells
+    const winCellsS = { [`${x},${y}`]: true } as WinCells
 
     while (field[`${tempX + 1},${tempY + 1}`] === target) {
-        winCells[`${tempX + 1},${tempY + 1}`] = true
+        winCellsF[`${tempX + 1},${tempY + 1}`] = true
         tempX++
         tempY++
     }
@@ -65,7 +66,7 @@ const getDiagonalSum = (
     tempX = x
 
     while (field[`${tempX - 1},${tempY - 1}`] === target) {
-        winCells[`${tempX - 1},${tempY - 1}`] = true
+        winCellsF[`${tempX - 1},${tempY - 1}`] = true
         tempX--
         tempY--
     }
@@ -74,7 +75,7 @@ const getDiagonalSum = (
     tempX = x
 
     while (field[`${tempX - 1},${tempY + 1}`] === target) {
-        winCells[`${tempX - 1},${tempY + 1}`] = true
+        winCellsS[`${tempX - 1},${tempY + 1}`] = true
         tempX--
         tempY++
     }
@@ -83,12 +84,14 @@ const getDiagonalSum = (
     tempX = x
 
     while (field[`${tempX + 1},${tempY - 1}`] === target) {
-        winCells[`${tempX + 1},${tempY - 1}`] = true
+        winCellsS[`${tempX + 1},${tempY - 1}`] = true
         tempX++
         tempY--
     }
 
-    return winCells
+    return Object.keys(winCellsF).length > Object.keys(winCellsS).length
+        ? winCellsF
+        : winCellsS
 }
 
 const getSum = (
