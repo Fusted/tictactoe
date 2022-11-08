@@ -12,6 +12,7 @@ interface Props {
     direction: Direction
     winCells: WinCells
     field: Field
+    onReset: VoidFunction
     setDirection(direction: Direction): void
     setWinCells(winCells: WinCells): void
     setField(field: Field): void
@@ -27,12 +28,14 @@ const Board = ({
     field,
     setWinCells,
     setField,
+    onReset,
 }: Props) => {
     const [currentValue, setCurrentValue] = useState<Targets>("X")
 
     const onCellClick = useCallback(
         (position: Position, value?: Targets) => {
             if (value || Object.values(winCells).length) {
+                onReset()
                 return
             }
             const newValue = currentValue === "X" ? "O" : "X"
@@ -56,13 +59,14 @@ const Board = ({
             }
         },
         [
+            winCells,
             currentValue,
             field,
-            goal,
             setField,
+            goal,
+            onReset,
             setWinCells,
             setDirection,
-            winCells,
         ]
     )
 

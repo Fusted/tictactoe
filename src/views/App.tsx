@@ -58,6 +58,7 @@ function App() {
                     setDirection={setDirection}
                     setWinCells={setWinCells}
                     setField={setField}
+                    onReset={onReset}
                 />
                 <Button onClick={onReset} text={"Reset"} />
             </div>
