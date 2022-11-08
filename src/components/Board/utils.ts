@@ -1,10 +1,10 @@
-import { Field, Position, Targets, WinCells } from "types/types"
+import { Field, Position, Targets, WinCells, WinPosition } from "types/types"
 
 const getHorizontalSum = (
     { x, y }: Position,
     target: Targets,
     field: Field
-): WinCells => {
+): WinPosition => {
     let tempX = x
     const winCells = { [`${x},${y}`]: true } as WinCells
 
@@ -20,14 +20,17 @@ const getHorizontalSum = (
         tempX--
     }
 
-    return winCells
+    return {
+        cells: winCells,
+        diraction: "horizontal",
+    }
 }
 
 const getVeritcalSum = (
     { x, y }: Position,
     target: Targets,
     field: Field
-): WinCells => {
+): WinPosition => {
     let tempY = y
     const winCells = { [`${x},${y}`]: true } as WinCells
 
@@ -43,14 +46,17 @@ const getVeritcalSum = (
         tempY--
     }
 
-    return winCells
+    return {
+        cells: winCells,
+        diraction: "vertical",
+    }
 }
 
 const getDiagonalSum = (
     { x, y }: Position,
     target: Targets,
     field: Field
-): WinCells => {
+): WinPosition => {
     let tempY = y
     let tempX = x
     const winCellsF = { [`${x},${y}`]: true } as WinCells
@@ -90,32 +96,32 @@ const getDiagonalSum = (
     }
 
     return Object.keys(winCellsF).length > Object.keys(winCellsS).length
-        ? winCellsF
-        : winCellsS
+        ? { cells: winCellsF, diraction: "r-diagonal" }
+        : { cells: winCellsS, diraction: "l-diagonal" }
 }
 
-const getSum = (
+const getWinPosition = (
     { x, y }: Position,
     target: Targets,
     field: Field,
     goal: number
-): WinCells => {
+): WinPosition => {
     const verticalSum = getVeritcalSum({ x, y }, target, field)
     const horizontalSum = getHorizontalSum({ x, y }, target, field)
     const diagonalSum = getDiagonalSum({ x, y }, target, field)
 
-    if (Object.keys(verticalSum).length === goal) {
+    if (Object.keys(verticalSum.cells).length === goal) {
         return verticalSum
     }
 
-    if (Object.keys(horizontalSum).length === goal) {
+    if (Object.keys(horizontalSum.cells).length === goal) {
         return horizontalSum
     }
 
-    if (Object.keys(diagonalSum).length === goal) {
+    if (Object.keys(diagonalSum.cells).length === goal) {
         return diagonalSum
     }
-    return {}
+    return { cells: {}, diraction: "none" }
 }
 
-export { getSum }
+export { getWinPosition }

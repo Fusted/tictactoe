@@ -2,7 +2,7 @@ import style from "./App.module.scss"
 
 import React, { useCallback, useState } from "react"
 import Board from "components/Board"
-import { Field, WinCells } from "types/types"
+import { Field, WinCells, Direction } from "types/types"
 import Controls from "components/Controls"
 import Button from "packages/Button"
 
@@ -10,6 +10,7 @@ const DEFAULT_SIZE = 3
 
 function App() {
     const [winCells, setWinCells] = useState({} as WinCells)
+    const [direction, setDirection] = useState<Direction>("none")
     const [field, setField] = useState({} as Field)
     const [xSize, setXSize] = useState(DEFAULT_SIZE)
     const [ySize, setYSize] = useState(DEFAULT_SIZE)
@@ -33,6 +34,7 @@ function App() {
     const onReset = useCallback(() => {
         setField({})
         setWinCells({})
+        setDirection("none")
     }, [])
 
     return (
@@ -51,9 +53,11 @@ function App() {
                     ySize={ySize}
                     goal={goal}
                     field={field}
+                    winCells={winCells}
+                    direction={direction}
+                    setDirection={setDirection}
                     setWinCells={setWinCells}
                     setField={setField}
-                    winCells={winCells}
                 />
                 <Button onClick={onReset} text={"Reset"} />
             </div>

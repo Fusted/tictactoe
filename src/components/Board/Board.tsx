@@ -2,15 +2,17 @@ import style from "./board.module.scss"
 
 import React, { useCallback, useState } from "react"
 import Cell from "components/Cell"
-import { Field, Position, Targets, WinCells } from "types/types"
-import { getSum } from "./utils"
+import { Field, Position, Targets, WinCells, Direction } from "types/types"
+import { getWinPosition } from "./utils"
 
 interface Props {
     xSize: number
     ySize: number
     goal: number
+    direction: Direction
     winCells: WinCells
     field: Field
+    setDirection(direction: Direction): void
     setWinCells(winCells: WinCells): void
     setField(field: Field): void
 }
@@ -20,6 +22,8 @@ const Board = ({
     ySize,
     goal,
     winCells,
+    direction,
+    setDirection,
     field,
     setWinCells,
     setField,
@@ -39,13 +43,27 @@ const Board = ({
             setField(newField)
             setCurrentValue(newValue)
 
-            const win = getSum(position, currentValue, newField, goal)
-
-            if (win) {
-                setWinCells(win)
+            const { cells, diraction } = getWinPosition(
+                position,
+                currentValue,
+                newField,
+                goal
+            )
+            console.log(cells)
+            if (cells) {
+                setWinCells(cells)
+                setDirection(diraction)
             }
         },
-        [currentValue, field, goal, setField, setWinCells, winCells]
+        [
+            currentValue,
+            field,
+            goal,
+            setField,
+            setWinCells,
+            setDirection,
+            winCells,
+        ]
     )
 
     const renderRows = () => {
@@ -60,6 +78,7 @@ const Board = ({
                         target={field[position]}
                         onCellClick={onCellClick}
                         position={{ y, x }}
+                        diraction={direction}
                         isWin={!!winCells[position]}
                     />
                 )
