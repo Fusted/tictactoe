@@ -1,10 +1,11 @@
 import style from "./App.module.scss"
 
 import React, { useCallback, useState } from "react"
-import Board from "components/Board"
 import { Field, WinCells, Direction, Figures } from "types/types"
-import Controls from "components/Controls"
 import Button from "packages/Button"
+import Board from "components/Board"
+import CurrentFigure from "components/CurrentFigure"
+import Controls from "components/Controls"
 
 const DEFAULT_SIZE = 3
 
@@ -50,6 +51,7 @@ function App() {
                     onYSizeChange={onYSizeChange}
                     onGoalChange={onGoalChange}
                 />
+                <CurrentFigure figure={figure} />
                 <Board
                     xSize={xSize}
                     ySize={ySize}
