@@ -1,4 +1,4 @@
-type Targets = "O" | "X"
+type Figures = "O" | "X"
 
 type Direction =
     | "horizontal"
@@ -8,7 +8,7 @@ type Direction =
     | "none"
 
 type Field = {
-    [k in string]: Targets
+    [k in string]: Figures
 }
 
 type WinCells = {
@@ -26,7 +26,7 @@ type Position = {
 }
 
 export {
-    type Targets,
+    type Figures,
     type Field,
     type WinCells,
     type Position,

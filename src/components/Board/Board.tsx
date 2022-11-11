@@ -1,18 +1,20 @@
 import style from "./board.module.scss"
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback } from "react"
 import Cell from "components/Cell"
-import { Field, Position, Targets, WinCells, Direction } from "types/types"
+import { Field, Position, Figures, WinCells, Direction } from "types/types"
 import { getWinPosition } from "./utils"
 
 interface Props {
     xSize: number
     ySize: number
     goal: number
+    figure: Figures
     direction: Direction
     winCells: WinCells
     field: Field
     onReset: VoidFunction
+    setFigure(figure: Figures): void
     setDirection(direction: Direction): void
     setWinCells(winCells: WinCells): void
     setField(field: Field): void
@@ -22,37 +24,37 @@ const Board = ({
     xSize,
     ySize,
     goal,
+    figure,
     winCells,
     direction,
-    setDirection,
     field,
+    onReset,
+    setFigure,
     setWinCells,
     setField,
-    onReset,
+    setDirection,
 }: Props) => {
-    const [currentValue, setCurrentValue] = useState<Targets>("X")
-
     const onCellClick = useCallback(
-        (position: Position, value?: Targets) => {
+        (position: Position, value?: Figures) => {
             if (value || Object.values(winCells).length) {
                 onReset()
                 return
             }
-            const newValue = currentValue === "X" ? "O" : "X"
+            const newFigure = figure === "X" ? "O" : "X"
             const newField = {
                 ...field,
-                [`${position.x},${position.y}`]: currentValue,
+                [`${position.x},${position.y}`]: figure,
             }
             setField(newField)
-            setCurrentValue(newValue)
+            setFigure(newFigure)
 
             const { cells, diraction } = getWinPosition(
                 position,
-                currentValue,
+                figure,
                 newField,
                 goal
             )
-            console.log(cells)
+
             if (cells) {
                 setWinCells(cells)
                 setDirection(diraction)
@@ -60,9 +62,10 @@ const Board = ({
         },
         [
             winCells,
-            currentValue,
+            figure,
             field,
             setField,
+            setFigure,
             goal,
             onReset,
             setWinCells,
@@ -79,7 +82,7 @@ const Board = ({
                 row.push(
                     <Cell
                         key={position}
-                        target={field[position]}
+                        figure={field[position]}
                         onCellClick={onCellClick}
                         position={{ y, x }}
                         diraction={direction}

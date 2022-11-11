@@ -1,8 +1,8 @@
-import { Field, Position, Targets, WinCells, WinPosition } from "types/types"
+import { Field, Position, Figures, WinCells, WinPosition } from "types/types"
 
 const getHorizontalSum = (
     { x, y }: Position,
-    target: Targets,
+    target: Figures,
     field: Field
 ): WinPosition => {
     let tempX = x
@@ -28,7 +28,7 @@ const getHorizontalSum = (
 
 const getVeritcalSum = (
     { x, y }: Position,
-    target: Targets,
+    target: Figures,
     field: Field
 ): WinPosition => {
     let tempY = y
@@ -54,7 +54,7 @@ const getVeritcalSum = (
 
 const getDiagonalSum = (
     { x, y }: Position,
-    target: Targets,
+    target: Figures,
     field: Field
 ): WinPosition => {
     let tempY = y
@@ -102,7 +102,7 @@ const getDiagonalSum = (
 
 const getWinPosition = (
     { x, y }: Position,
-    target: Targets,
+    target: Figures,
     field: Field,
     goal: number
 ): WinPosition => {

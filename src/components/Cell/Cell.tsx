@@ -2,29 +2,29 @@ import style from "./cell.module.scss"
 
 import React from "react"
 import cn from "classnames"
-import { Direction, type Position, type Targets } from "types/types"
+import { Direction, type Position, type Figures } from "types/types"
 
 interface Props {
     position: Position
     isWin: boolean
-    target?: Targets
+    figure?: Figures
     diraction: Direction
-    onCellClick: (position: Position, value?: Targets) => void
+    onCellClick: (position: Position, value?: Figures) => void
 }
 
-const Cell = ({ position, target, onCellClick, isWin, diraction }: Props) => {
+const Cell = ({ position, figure, onCellClick, isWin, diraction }: Props) => {
     return (
         <div
             onClick={() =>
-                onCellClick({ x: position.x, y: position.y }, target)
+                onCellClick({ x: position.x, y: position.y }, figure)
             }
             className={cn(
                 style.cell,
-                target === "O" ? style.red : style.green,
+                figure === "O" ? style.red : style.green,
                 isWin && style[diraction]
             )}
         >
-            {target}
+            {figure}
         </div>
     )
 }
