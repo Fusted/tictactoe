@@ -18,27 +18,30 @@ function App() {
     const [ySize, setYSize] = useState(DEFAULT_SIZE)
     const [goal, setGoal] = useState(DEFAULT_SIZE)
 
-    const onXSizeChange = (value: number) => {
-        setXSize(value)
-        onReset()
-    }
-
-    const onYSizeChange = (value: number) => {
-        setYSize(value)
-        onReset()
-    }
-
-    const onGoalChange = (value: number) => {
-        setGoal(value)
-        onReset()
-    }
-
     const onReset = useCallback(() => {
         setField({})
         setWinCells({})
         setFigure("X")
         setDirection("none")
     }, [])
+
+    const onXSizeChange = useCallback(
+        (value: number) => {
+            setXSize(value)
+            onReset()
+        },
+        [onReset]
+    )
+
+    const onYSizeChange = useCallback((value: number) => {
+        setYSize(value)
+        onReset()
+    }, [onReset])
+
+    const onGoalChange = useCallback((value: number) => {
+        setGoal(value)
+        onReset()
+    }, [onReset])
 
     return (
         <div>
